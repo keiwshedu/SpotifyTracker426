@@ -5,7 +5,7 @@ const axios = require("axios");
 const querystring = require("querystring");
 
 const app = express();
-const port = 8888;
+const port = process.env.PORT || 8888; // Use the port defined in environment or default to 8888
 
 const redirect_uri = "http://localhost:8888/callback"; // Make sure redirect URI matches with Spotify Dashboard
 
@@ -18,6 +18,11 @@ app.use(express.json());
 // Spotify credentials
 const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
+
+// Automatically redirect from the root URL to /login
+app.get("/", (req, res) => {
+  res.redirect("/login");
+});
 
 // Step 1: Authorization endpoint
 app.get("/login", (req, res) => {
@@ -111,6 +116,7 @@ app.get("/currently-playing", (req, res) => {
     });
 });
 
+// Start the server
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
