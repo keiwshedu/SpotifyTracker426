@@ -36,7 +36,6 @@ function App() {
 
   useEffect(() => {
     if (window.Spotify && accessToken) {
-      // Define onSpotifyWebPlaybackSDKReady globally
       window.onSpotifyWebPlaybackSDKReady = () => {
         const token = accessToken;
 
@@ -49,7 +48,7 @@ function App() {
 
         player.addListener("ready", ({ device_id }) => {
           console.log("Spotify Player is ready");
-          window.spotifyPlayer = player; // Store player instance globally for access in handlers
+          window.spotifyPlayer = player;
         });
 
         player.addListener("not_ready", ({ device_id }) => {
@@ -59,13 +58,11 @@ function App() {
         player.connect();
       };
 
-      // Load the Spotify SDK script
       const script = document.createElement("script");
       script.src = "https://sdk.scdn.co/spotify-player.js";
       script.async = true;
       document.body.appendChild(script);
 
-      // Clean up the script on component unmount
       return () => {
         document.body.removeChild(script);
       };
@@ -75,7 +72,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Spotify Music Player</h1>
+        <h1>Currently listening to</h1>
         {track ? (
           <div className="track-info">
             <img
@@ -85,13 +82,15 @@ function App() {
             />
             <div className="track-details">
               <h2>{track.item.name}</h2>
-              <p>
-                {track.item.artists.map((artist) => artist.name).join(", ")}
-              </p>
+              <p>{track.item.artists.map((artist) => artist.name).join(", ")}</p>
               <p>{track.item.album.name}</p>
-              <button onClick={handlePlayPause}>
-                {track.is_playing ? "Pause" : "Play"}
-              </button>
+              <div className="controls">
+                <button onClick={handlePlayPause}>
+                  {track.is_playing ? "❚❚" : "▶"}
+                </button>
+                <button>⏮</button>
+                <button>⏭</button>
+              </div>
             </div>
           </div>
         ) : (
