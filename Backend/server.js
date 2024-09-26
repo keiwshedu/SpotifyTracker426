@@ -7,7 +7,7 @@ const querystring = require("querystring");
 const app = express();
 const port = process.env.PORT || 8888; // Use the port defined in environment or default to 8888
 
-const redirect_uri = "http://localhost:8888/callback"; // Make sure redirect URI matches with Spotify Dashboard
+const redirect_uri = "https://keiwshedu.github.io/SpotifyTracker426/callback"; // Change to your GitHub Pages callback URL
 
 // Enable CORS for all routes
 app.use(cors()); // <-- This line enables CORS
@@ -70,7 +70,7 @@ app.get("/callback", (req, res) => {
 
       // Redirect to the frontend with the access token
       res.redirect(
-        `http://localhost:3000/dashboard?access_token=${access_token}`
+        `https://keiwshedu.github.io/SpotifyTracker426/dashboard?access_token=${access_token}`
       );
     })
     .catch((err) => {
