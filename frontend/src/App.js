@@ -17,7 +17,7 @@ function App() {
   const fetchCurrentlyPlaying = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8888/currently-playing?access_token=${accessToken}`
+        `https://spotifytracker426backend-keiwsh-keis-projects-b08f874f.vercel.app/currently-playing?access_token=${accessToken}`
       );
       setTrack(response.data);
     } catch (error) {
